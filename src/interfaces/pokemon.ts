@@ -17,7 +17,7 @@ export interface PokemonResume {
     height:    number;
     weight:    number;
     abilities: Ability[];
-    type:      Type[];
+    types:      Type[];
 }
 
 export interface PokemonInfo {
