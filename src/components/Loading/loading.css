@@ -1,0 +1,24 @@
+
+.container_loader {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 1rem;
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    border: solid #000 10px;
+    border-bottom: solid transparent 10px;
+    border-radius: 50%;
+    animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
