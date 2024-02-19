@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ListPokemones, PokemonInfo, PokemonResume } from '../interfaces/pokemon'
+import not_found from '../assets/icons/not_found.svg';
 
 export const getPokemones = async (limit: number, offset: number): Promise<PokemonResume[]> => {
     try {
@@ -11,7 +12,7 @@ export const getPokemones = async (limit: number, offset: number): Promise<Pokem
             return {
                 id: data.id,
                 name: data.name.charAt(0).toUpperCase() + data.name.slice(1),
-                img: data.sprites.other?.dream_world.front_default,
+                img: data.sprites.other?.dream_world.front_default || not_found,
                 height: data.height,
                 weight: data.weight,
                 abilities: data.abilities.map(abilities => abilities.ability.name).join(', '),
