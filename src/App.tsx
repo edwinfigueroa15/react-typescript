@@ -1,10 +1,13 @@
-import { Card } from "./components";
-import { PublicLayout } from "./layout";
+import './App.css'
 
 function App() {
-  return <PublicLayout>
-    {Array(5).fill('').map(() => <Card color="red">Hola</Card>)}
-  </PublicLayout>
+  return (
+    <>
+        <h1 className='text-yellow-600'>
+          Hello world!
+        </h1>
+    </>
+  )
 }
 
-export default App;
+export default App
