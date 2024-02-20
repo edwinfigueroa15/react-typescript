@@ -1,15 +1,19 @@
-import { Card } from "@/components/atoms";
+import { Loading } from "@/components/atoms";
 import { CardPokemon } from "@/components/molecules";
 import React, { useEffect, useState } from "react";
-import { getPokemones } from "../../services/pokeapi";
-import "./home.css";
+import { getPokemones } from "@/services/pokeapi";
+import { PokemonResume } from "@/interfaces/pokemon";
 
 export const HomePage: React.FC<{}> = () => {
   const [params, setParams] = useState({ limit: 30, offset: 0 });
-  const [pokemones, setPokemones]: any = useState([]);
-  const [loading, setLoading]: any = useState(true);
+  const [pokemones, setPokemones] = useState<PokemonResume[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const getData = async () => {
+  // METHODS ------------------------------------------
+  
+
+  // API --------------------------------------------
+  const getData = async (): Promise<void> => {
     try {
       const response = await getPokemones(params.limit, params.offset);
       setPokemones(response);
@@ -18,8 +22,9 @@ export const HomePage: React.FC<{}> = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
+  // LIFECYCLE ------------------------------------------
   useEffect(() => {
     setLoading(true);
     getData();
@@ -27,16 +32,12 @@ export const HomePage: React.FC<{}> = () => {
 
   useEffect(() => {
     const handleScroll = async () => {
-      const { scrollTop, clientHeight, scrollHeight } =
-        document.documentElement;
+      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
       if (scrollTop + (clientHeight + 1) >= scrollHeight) {
-        setParams({ ...params, offset: params.offset + params.limit });
         setLoading(true);
+        setParams({ ...params, offset: params.offset + params.limit });
         try {
-          const response = await getPokemones(
-            params.limit,
-            params.offset + params.limit
-          );
+          const response = await getPokemones(params.limit, params.offset + params.limit);
           setPokemones([...pokemones, ...response]);
         } catch (error) {
           console.log(error);
@@ -44,43 +45,22 @@ export const HomePage: React.FC<{}> = () => {
           setLoading(false);
         }
       }
-    };
+    }
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pokemones]);
 
+  // RETURN VIEW ---------------------------------------
   return (
     <>
-      {!loading && <p>Cargando...</p>}
-
-      <div className="container">
-        {pokemones?.map((pokemon: any) => (
-          <Card key={pokemon.id}>
-            <div>
-              <p className="card_title">{pokemon.name}</p>
-              <p>Height: {pokemon.height}</p>
-              <p>Weight: {pokemon.weight}</p>
-              <p className="abilities">Abilities: {pokemon.abilities}</p>
-              <p className="type">
-                {pokemon.types.map((item: string) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </p>
-            </div>
-            <div className="container_img">
-              <img
-                src={pokemon.img}
-                alt="Imagen del Pokémon"
-                className="w-24 h-24 mx-auto mb-4"
-              />
-            </div>
-          </Card>
-        ))}
-        {pokemones?.map((pokemon: any) => (
+      <div className="flex justify-center items-center flex-row flex-wrap gap-4">
+        {pokemones?.map((pokemon: PokemonResume) => (
           <CardPokemon pokemon={pokemon} key={pokemon.id} />
         ))}
       </div>
+
+      {loading && <Loading />}
     </>
   );
 };

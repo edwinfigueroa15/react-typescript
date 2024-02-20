@@ -1,0 +1,15 @@
+.type {
+    margin-top: .8rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: .4rem;
+}
+
+.type span {
+    background-color: goldenrod;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: .3rem .6rem;
+    border-radius: .2rem;
+}

@@ -1,40 +1,31 @@
-import { Card, CardProps, Chip, Typography } from "@/components/atoms";
-import { PokemonResume, Type } from "@/interfaces/pokemon";
+import { CardProps, Typography } from "@/components/atoms";
+import { PokemonResume } from "@/interfaces/pokemon";
+import '@/components/molecules/CardPokemon/CardPokemon.css'
 
 export type CardPokemonProps = CardProps & {
-  pokemon: PokemonResume; // TODO: change
-};
+  pokemon: PokemonResume;
+}
 
-const CardPokemon = ({ pokemon, color, ...props }: CardPokemonProps) => {
+const CardPokemon = ({ pokemon, ...props }: CardPokemonProps) => {
   const { name, height, img, weight, abilities, types } = pokemon;
 
+  // LIFECYCLE ------------------------------------------
   return (
-    <Card
-      className="flex flex-row gap-3 w-98 overflow-hidden justify-between items-center"
-      {...props}
-    >
-      <div className="flex flex-col">
-        <Typography variant="title" component="h3">
-          {name}
+    <div className="p-3 text-sm cursor-pointer min-w-80 max-w-96 text-start flex justify-space-between items-center flex-row border border-slate-950 border-solid">
+      <div className="w-52">
+        <Typography variant="title" component="h3">{name}</Typography>
+        <Typography variant="body">{`Height: ${height}`}</Typography>
+        <Typography variant="body">{`Weight: ${weight}`}</Typography>
+        <Typography variant="body" className="hidden_text">{`Abilities: ${abilities}`}</Typography>
+        <Typography variant="body" className="type">
+          {types.map((item: string) => (<span key={item}>{item}</span>))}
         </Typography>
-        <div className="flex flex-col justify-start items-start p-2">
-          <Typography variant="body">{`Height: ${height}`}</Typography>
-          <Typography variant="body">{`Weight: ${weight}`}</Typography>
-          <Typography
-            variant="body"
-            className="truncate"
-          >{`Abilities: ${abilities}`}</Typography>
-          <div className="flex gap-2 flex-row">
-            {types.map((item: Type) => (
-              <Chip key={item as unknown as string}>
-                {item as unknown as string}
-              </Chip>
-            ))}
-          </div>
-        </div>
       </div>
-      <img src={img} alt={img} className="h-24" />
-    </Card>
+      <div className="flex justify-center items-center">
+        <img src={img} alt="Image ok Pokémon" className="m-0 w-24 h-24" />
+      </div>
+    </div>
+
   );
 };
 
