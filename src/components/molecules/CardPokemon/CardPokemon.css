@@ -1,0 +1,18 @@
+.card {
+    border-radius: .8rem;
+}
+
+.type {
+    margin-top: .8rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .4rem;
+}
+
+.type span {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: .3rem .6rem;
+    border-radius: .2rem;
+}

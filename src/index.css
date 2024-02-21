@@ -3,70 +3,83 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg-normal: #c0beb5b3;
+  --bg-tag-normal: #c0beb5;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --bg-fighting: #bd3127bb;
+  --bg-tag-fighting: #bd3127;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  --bg-flying: #95b1c5;
+  --bg-tag-flying: #3e9ff7;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --bg-poison: #d6b6d4;
+  --bg-tag-poison: #ae67ad;
+
+  --bg-ground: #facf25a8;
+  --bg-tag-ground: #facf25;
+
+  --bg-rock: #e1be589c;
+  --bg-tag-rock: #e1be58;
+
+  --bg-bug: #bfd9019c;
+  --bg-tag-bug: #bfd901;
+
+  --bg-ghost: #6665cea6;
+  --bg-tag-ghost: #6665ce;
+
+  --bg-steel: #c9c8e4;
+  --bg-tag-steel: #acabc3;
+
+  --bg-fire: #f70a0da3;
+  --bg-tag-fire: #ff301e;
+
+  --bg-water: #00abf9ab;
+  --bg-tag-water: #00abf9;
+
+  --bg-grass: #bddcbc;
+  --bg-tag-grass: #7bb97a;
+
+  --bg-electric: #f8e800b8;
+  --bg-tag-electric: #f8e800;
+
+  --bg-psychic: #ff38c2ab;
+  --bg-tag-psychic: #ff38c2;
+
+  --bg-ice: #26fbf7ad;
+  --bg-tag-ice: #26fbf7;
+
+  --bg-dragon: #815af3;
+  --bg-tag-dragon: #1b0e45;
+
+  --bg-dark: #904a2cc2;
+  --bg-tag-dark: #904a2c;
+
+  --bg-fairy: #ffa5ff;
+  --bg-tag-fairy: #f05df0;
+
+  --bg-unknown: #cfa7cd;
+  --bg-tag-unknown: #3a1744;
+
+  --bg-shadow: #835292;
+  --bg-tag-shadow: #6a4271;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.hidden_text {
+  height: 25px;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.button {
+  background-color: #188038;
+  color: #ffffff;
+  border-radius: .2rem;
+  font-size: 1rem;
+  font-weight: bold;
 }

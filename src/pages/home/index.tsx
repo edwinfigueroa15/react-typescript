@@ -1,86 +1,98 @@
-import { Card } from "@/components/atoms";
-import { CardPokemon } from "@/components/molecules";
+import { Loading } from "@/components/atoms";
+import { CardPokemon, Popup } from "@/components/molecules";
 import React, { useEffect, useState } from "react";
-import { getPokemones } from "../../services/pokeapi";
-import "./home.css";
+import { getPokemones, getPokemonesByType } from "@/services/pokeapi";
+import { PokemonResume } from "@/interfaces/pokemon";
+import { useLocation } from "react-router-dom";
+import { sweetalert } from "@/utils/sweetalert";
 
 export const HomePage: React.FC<{}> = () => {
   const [params, setParams] = useState({ limit: 30, offset: 0 });
-  const [pokemones, setPokemones]: any = useState([]);
-  const [loading, setLoading]: any = useState(true);
+  const [pokemones, setPokemones] = useState<PokemonResume[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const getData = async () => {
+  const { state } = useLocation();
+  const [filter, setFilter] = useState<string | undefined>(state?.type)
+
+  let stateAux: string | undefined = undefined
+
+  // METHODS ------------------------------------------
+  const clearFilters = () => {
+    window.history.replaceState(null, '', window.location.pathname);
+    setLoading(true)
+    setFilter(undefined)
+    stateAux = undefined
+    getData()
+  }
+
+  const getInfoPokemon = (info: any) => {
+    sweetalert(<Popup infoPokemon={info} />)
+  }
+
+  // API --------------------------------------------
+  const getData = async (): Promise<void> => {
     try {
-      const response = await getPokemones(params.limit, params.offset);
-      setPokemones(response);
+      if (stateAux) {
+        const response = await getPokemonesByType(filter!);
+        setPokemones(response);
+
+      } else {
+        const response = await getPokemones(params.limit, params.offset);
+        setPokemones(response);
+      }
+
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
+  // LIFECYCLE ------------------------------------------
   useEffect(() => {
     setLoading(true);
+    stateAux = state
     getData();
   }, []);
 
   useEffect(() => {
     const handleScroll = async () => {
-      const { scrollTop, clientHeight, scrollHeight } =
-        document.documentElement;
+      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
       if (scrollTop + (clientHeight + 1) >= scrollHeight) {
-        setParams({ ...params, offset: params.offset + params.limit });
         setLoading(true);
+        setParams({ ...params, offset: params.offset + params.limit });
         try {
-          const response = await getPokemones(
-            params.limit,
-            params.offset + params.limit
-          );
+          const response = await getPokemones(params.limit, params.offset + params.limit);
           setPokemones([...pokemones, ...response]);
+
         } catch (error) {
           console.log(error);
         } finally {
           setLoading(false);
         }
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    if (!filter) window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pokemones]);
 
+  // RETURN VIEW ---------------------------------------
   return (
     <>
-      {!loading && <p>Cargando...</p>}
+      {!loading && filter && (
+        <div className="w-11/12 flex justify-end">
+          <button className="button p-3 mb-5" onClick={clearFilters}>Show all</button>
+        </div>
+      )}
 
-      <div className="container">
-        {pokemones?.map((pokemon: any) => (
-          <Card key={pokemon.id}>
-            <div>
-              <p className="card_title">{pokemon.name}</p>
-              <p>Height: {pokemon.height}</p>
-              <p>Weight: {pokemon.weight}</p>
-              <p className="abilities">Abilities: {pokemon.abilities}</p>
-              <p className="type">
-                {pokemon.types.map((item: string) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </p>
-            </div>
-            <div className="container_img">
-              <img
-                src={pokemon.img}
-                alt="Imagen del Pokémon"
-                className="w-24 h-24 mx-auto mb-4"
-              />
-            </div>
-          </Card>
-        ))}
-        {pokemones?.map((pokemon: any) => (
-          <CardPokemon pokemon={pokemon} key={pokemon.id} />
+      <div className="flex justify-center items-center flex-row flex-wrap gap-4">
+        {pokemones?.map((pokemon: PokemonResume) => (
+          <CardPokemon pokemon={pokemon} sendInfoPokemon={getInfoPokemon} key={pokemon.id} />
         ))}
       </div>
+
+      {loading && <Loading />}
     </>
   );
 };

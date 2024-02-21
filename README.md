@@ -1,30 +1,44 @@
-# React + TypeScript + Vite
+# Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Demo del proyecto en netlify
 
-Currently, two official plugins are available:
+- [Ver proyecto en la web](https://pokemon-react-typescript.netlify.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Instalación
 
-## Expanding the ESLint configuration
+Para ejecutar el proyecto deberá clonar o descargar el proyecto y necesitará algunas herramientas que mencionaré abajo:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [NodeJs](https://nodejs.org/en) (El proyecto fue realizado con la version 16)
 
-- Configure the top-level `parserOptions` property like this:
+Ya que tengamos el proyecto clonado o descargado y Node instalado lo primero es crear un archivo **.env.local** en la raíz. Se dejó un archivo **.env.example** el cual solo es necesario cambiarle el nombre ya que la información de archivo es la misma y el nuevo nombre deberá ser:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+.env.local
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Prodecemos a ejecutar una terminal en la carpeta donde esta nuestro proyecto y ejecutamos el siguiente comando:
+
+```
+npm install
+```
+
+Una vez termine de instalar todo gracias al comando anterior, ahora ejecutamos el siguiente comando para iniciar el proyecto:
+
+```
+npm run dev
+```
+
+Una vez termine de iniciar podremos acceder al proyecto colocando lo siguiente en cualquier navegador:
+
+```
+http://127.0.0.1:5173
+```
+
+## Librerías utilizadas
+
+El proyecto se trabajo en cierta forma con un enfoque a Atom Design y se usaron las siguientes herramientas:
+
+- [Tailwindcss](https://tailwindcss.com): Utilizada para trabajar los estilos y clases que ya tiene definidas.
+- [Recharts](https://recharts.org/en-US): Utilizada para crear las gráficas.
+- [Sweetalert2](https://sweetalert2.github.io): Utilizada para crear el popup.
+- [Animate.css](https://animate.style/): Utilizada para crear dar animaciones a los componentes.
