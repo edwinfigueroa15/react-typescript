@@ -1,9 +1,10 @@
 import { Loading } from "@/components/atoms";
-import { CardPokemon } from "@/components/molecules";
+import { CardPokemon, Popup } from "@/components/molecules";
 import React, { useEffect, useState } from "react";
 import { getPokemones, getPokemonesByType } from "@/services/pokeapi";
 import { PokemonResume } from "@/interfaces/pokemon";
 import { useLocation } from "react-router-dom";
+import { sweetalert } from "@/utils/sweetalert";
 
 export const HomePage: React.FC<{}> = () => {
   const [params, setParams] = useState({ limit: 30, offset: 0 });
@@ -24,10 +25,13 @@ export const HomePage: React.FC<{}> = () => {
     getData()
   }
 
+  const getInfoPokemon = (info: any) => {
+    sweetalert(<Popup infoPokemon={info} />)
+  }
+
   // API --------------------------------------------
   const getData = async (): Promise<void> => {
     try {
-      console.log("stateAux", stateAux)
       if (stateAux) {
         const response = await getPokemonesByType(filter!);
         setPokemones(response);
@@ -69,7 +73,6 @@ export const HomePage: React.FC<{}> = () => {
       }
     }
 
-    console.log("filter", filter)
     if (!filter) window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pokemones]);
@@ -85,7 +88,7 @@ export const HomePage: React.FC<{}> = () => {
 
       <div className="flex justify-center items-center flex-row flex-wrap gap-4">
         {pokemones?.map((pokemon: PokemonResume) => (
-          <CardPokemon pokemon={pokemon} key={pokemon.id} />
+          <CardPokemon pokemon={pokemon} sendInfoPokemon={getInfoPokemon} key={pokemon.id} />
         ))}
       </div>
 

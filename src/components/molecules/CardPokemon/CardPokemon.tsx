@@ -1,12 +1,15 @@
 import { Typography } from "@/components/atoms";
 import { PokemonResume } from "@/interfaces/pokemon";
 import '@/components/molecules/CardPokemon/CardPokemon.css'
+import { getPokemonByName } from "@/services/pokeapi";
 
 export type CardPokemonProps = {
   pokemon: PokemonResume;
+  sendInfoPokemon: any
 }
 
-const CardPokemon = ({ pokemon }: CardPokemonProps) => {
+// METHODS ----------------------------------------------------------
+const CardPokemon = ({ pokemon, sendInfoPokemon }: CardPokemonProps) => {
   const { name, height, img, weight, abilities, types } = pokemon;
 
   let backgroundColor
@@ -20,9 +23,14 @@ const CardPokemon = ({ pokemon }: CardPokemonProps) => {
       break;
   }
 
-  // LIFECYCLE ------------------------------------------
+  // API -------------------------------------------------------
+  const handleClick = async () => {
+    const response = await getPokemonByName(name.toLowerCase())
+    sendInfoPokemon({...response, name, img})
+  }
+
   return (
-    <div style={{ background: backgroundColor }} className="card p-3 text-sm cursor-pointer min-w-80 max-w-96 text-start flex justify-space-between items-center flex-row">
+    <div style={{ background: backgroundColor }} className="card p-3 text-sm cursor-pointer min-w-80 max-w-96 text-start flex justify-space-between items-center flex-row" onClick={handleClick}>
       <div className="w-52">
         <Typography variant="title" component="h3">{name}</Typography>
         <Typography variant="body">{`Height: ${height}`}</Typography>
