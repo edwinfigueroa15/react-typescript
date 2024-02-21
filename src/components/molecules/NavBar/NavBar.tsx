@@ -6,16 +6,19 @@ import { CiMenuFries } from "react-icons/ci";
 const NavBar = () => {
   const [click, setClick] = useState<boolean>(false)
 
+  // Methods --------------------------------------------------------
+  const handleClick = () => setClick(!click)
+  const hiddenMenu = () => setClick(false)
+
+  // Layouts --------------------------------------------------------
   const content = <>
     <div className="lg:hidden block absolute top-14 w-full left-0 rigth-0 transition" style={{ backgroundColor: '#393f4b', color: '#ffffff' }}>
       <ul className="text-center text-xl p-2">
-        <li className="p-3"><Link to={'/'}>Home</Link></li>
-        <li className="p-3 mb-3"><Link to={'/dashboard'}>Dashboard</Link></li>
+        <li onClick={hiddenMenu} className="p-3"><Link to={'/'}>Home</Link></li>
+        <li onClick={hiddenMenu} className="p-3 mb-3"><Link to={'/dashboard'}>Dashboard</Link></li>
       </ul>
     </div>
   </>
-
-  const handleClick = () => setClick(!click)
 
   return (
     <nav>
@@ -28,8 +31,8 @@ const NavBar = () => {
         <div className="lg:flex md:flex lg:felx-1 items-center justify-end font-normal hidden">
           <div className="flex-10">
             <ul className="flex gap-8 mr-16 text-[18px]">
-              <li className=""><Link to={'/'}>Home</Link></li>
-              <li className=""><Link to={'/dashboard'}>Dashboard</Link></li>
+              <li><Link to={'/'}>Home</Link></li>
+              <li><Link to={'/dashboard'}>Dashboard</Link></li>
             </ul>
           </div>
         </div>
