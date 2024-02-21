@@ -7,7 +7,7 @@ export const sweetalert = (component: any) => {
     html: component,
     showConfirmButton: false,
     showCloseButton: true,
-    position: 'top-left',
+    position: 'top-start',
     background: "#ededed",
     backdrop: 'transparent',
     showClass: {
