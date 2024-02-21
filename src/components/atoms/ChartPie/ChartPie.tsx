@@ -1,4 +1,3 @@
-import React from "react";
 import { PieChart, Pie, Tooltip } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 
